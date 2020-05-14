@@ -1,0 +1,32 @@
+[
+    {
+        "postId": 1,
+        "todoTitle": "Todo title 1",
+        "todoText": "Todo text 1",
+        "star": "4"
+    },
+    {
+        "postId": 1,
+        "todoTitle": "Todo title 2",
+        "todoText": "Todo text 2",
+        "star": "3"
+    },
+    {
+        "postId": 2,
+        "todoTitle": "Todo title 3",
+        "todoText": "Todo text 3",
+        "star": "1"
+    },
+    {
+        "postId": 2,
+        "todoTitle": "Todo title 4",
+        "todoText": "Todo text 4",
+        "star": "7"
+    },
+    {
+        "postId": 3,
+        "todoTitle": "Todo title 5",
+        "todoText": "Todo text 5",
+        "star": "6"
+    }
+]
