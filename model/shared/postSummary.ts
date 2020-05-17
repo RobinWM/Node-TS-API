@@ -1,7 +1,7 @@
 export default class PostSummary {
   userId: number;
   title: string;
-  id: number;
+  id: string;
   body: string;
 
   constructor(data: any) {
