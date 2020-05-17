@@ -1,38 +1,25 @@
-import express = require("express");
-import {apiErrorHandler} from "./api/general/errorHanding";
-
-import bodyParser from "body-parser";
-import {postRouter} from "./api/posts/apiPosts";
-
-const app = express();
-const mysql = require("mysql");
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-
-//0.设置允许跨域访问该服务
-app.all('*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Methods', '*');
-  res.header('Content-Type', 'application/json;charset=utf-8');
-  next();
-});
-
+"use strict";
+exports.__esModule = true;
+var express = require("express");
+var errorHanding_1 = require("./api/general/errorHanding");
+var body_parser_1 = require("body-parser");
+var apiPosts_1 = require("./api/posts/apiPosts");
+var app = express();
+var mysql = require("mysql");
+app.use(body_parser_1["default"].urlencoded({ extended: false }));
+app.use(body_parser_1["default"].json());
 // 1.定义中间件
-const logger: express.RequestHandler = (req, res, next) => {
-  console.log(new Date() + "-" + req.method + "-" + req.path);
-  next();
+var logger = function (req, res, next) {
+    console.log(new Date() + "-" + req.method + "-" + req.path);
+    next();
 };
-
 //2.全局使用，也可以单独使用
 app.use(logger);
-
 // 6.连接mysql
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "123456",
+var db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "123456"
 });
 // db.connect((err: any) => {
 // if (err) throw err;
@@ -46,13 +33,10 @@ const db = mysql.createConnection({
 // }
 // });
 // });
-
 // 7.处理错误信息
-app.use(apiErrorHandler);
-
+app.use(errorHanding_1.apiErrorHandler);
 // 8.req对象详解
 // GET http://localhost:8091/posts/id2/todos?star=5
-
 /**
  *   GET: req.method
  *   http: req.protocol
@@ -68,7 +52,6 @@ app.use(apiErrorHandler);
  *   req.cookies
  *   req.fresh
  */
-
 // 9.res对象详解
 /**
  *   res.send
@@ -81,7 +64,6 @@ app.use(apiErrorHandler);
  *    res.get,
  *    res.set
  */
-
 // 10.状态码概述
 /**
  *   2xx - success  成功
@@ -89,7 +71,6 @@ app.use(apiErrorHandler);
  *   4xx - client   客户端错误
  *   5xx - server   服务端错误
  */
-
 // 11.常用状态码
 // 200 - OK  数据请求成功并返回
 // 201 - 创建（post,put,patch）
@@ -98,12 +79,9 @@ app.use(apiErrorHandler);
 // 401 - 未授权 token相关
 // 404 - 未找到页面，页面不存在
 // 405 - 方法未经允许
-
-app.get("/api/headers", (req, res, next) => res.json(req.headers));
-
+app.get("/headers", function (req, res, next) { return res.json(req.headers); });
 // 配置posts路径
-app.use("/api/posts", postRouter);
-
-app.listen(process.env.PORT || 5000, () => {
-  console.log("Server started...");
+app.use("/posts", apiPosts_1.postRouter);
+app.listen(process.env.PORT || 5000, function () {
+    console.log("Server started...");
 });

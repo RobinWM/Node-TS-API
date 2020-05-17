@@ -11,6 +11,14 @@ var app = express();
 var mysql = require("mysql");
 app.use(body_parser_1["default"].urlencoded({ extended: false }));
 app.use(body_parser_1["default"].json());
+//0.设置允许跨域访问该服务
+app.all('*', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', '*');
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    next();
+});
 // 1.定义中间件
 var logger = function (req, res, next) {
     console.log(new Date() + "-" + req.method + "-" + req.path);
@@ -24,19 +32,18 @@ var db = mysql.createConnection({
     user: "root",
     password: "123456"
 });
-db.connect(function (err) {
-    if (err)
-        throw err;
-    console.log("连接成功！");
-    var sql = "CREATE DATABASE nodemysql";
-    // db.query(sql, (err: any, res: any) => {
-    // if (err) {
-    // console.log(err);
-    // } else {
-    // console.log(res);
-    // }
-    // });
-});
+// db.connect((err: any) => {
+// if (err) throw err;
+// console.log("连接成功！");
+// const sql = "CREATE DATABASE nodemysql";
+// db.query(sql, (err: any, res: any) => {
+// if (err) {
+// console.log(err);
+// } else {
+// console.log(res);
+// }
+// });
+// });
 // 7.处理错误信息
 app.use(errorHanding_1.apiErrorHandler);
 // 8.req对象详解
@@ -83,9 +90,9 @@ app.use(errorHanding_1.apiErrorHandler);
 // 401 - 未授权 token相关
 // 404 - 未找到页面，页面不存在
 // 405 - 方法未经允许
-app.get("/headers", function (req, res, next) { return res.json(req.headers); });
+app.get("/api/headers", function (req, res, next) { return res.json(req.headers); });
 // 配置posts路径
-app.use("/posts", apiPosts_1.postRouter);
-app.listen(process.env.PORT || 8091, function () {
+app.use("/api/posts", apiPosts_1.postRouter);
+app.listen(process.env.PORT || 5000, function () {
     console.log("Server started...");
 });

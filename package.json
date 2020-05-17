@@ -5,8 +5,8 @@
   "main": "server.ts",
   "repository": "",
   "scripts": {
-    "start-server": "tsc & node build/server.js",
-    "start": "nodemon -e ts -w ./ -x npm run start-server"
+    "server": "tsc & node build/server.js",
+    "dev": "nodemon -e ts -w ./ -x npm run server"
   },
   "keywords": [],
   "author": "",
